@@ -1,0 +1,5 @@
+voiceen/
+__pycache__/
+*.pyc
+.env
+models/

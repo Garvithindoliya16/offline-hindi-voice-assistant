@@ -1,0 +1,34 @@
+sentence,intent
+पैसे जमा करने हैं,deposit
+जमा करना है,deposit
+रुपये डालने हैं,deposit
+पैसा जमा कराना है,deposit
+कैश जमा करना है,deposit
+
+पैसे निकालने हैं,withdraw
+निकालना है,withdraw
+रुपये निकाल दो,withdraw
+मुझे पैसे चाहिए,withdraw
+निकासी करनी है,withdraw
+
+नया खाता खोलना है,open_account
+अकाउंट खोलना है,open_account
+खाता बनवाना है,open_account
+नया बैंक अकाउंट चाहिए,open_account
+
+बैलेंस बताओ,balance
+मेरे खाते में कितने पैसे हैं,balance
+बैलेंस चेक करना है,balance
+पैसे कितने हैं,balance
+
+पासबुक प्रिंट करनी है,passbook
+पासबुक अपडेट करनी है,passbook
+एंट्री करवानी है,passbook
+
+मैं कुछ नहीं करना चाहता हूँ,other
+मुझे कुछ नहीं चाहिए,other
+बस ऐसे ही आया हूँ,other
+अभी कुछ नहीं करना,other
+समझ नहीं आया,other
+क्या बोलूं,other
+नहीं पता,other
