@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Withdraw Money</title>
+    <link rel="stylesheet" href="css/deposit.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <header class="navbar">
+      <div class="nav-left">
+        <div class="logo"></div>
+        <span>Bank Form Assistance System</span>
+      </div>
+      <div class="nav-right">
+        <select>
+          <option>English</option>
+          <option>हिंदी</option>
+        </select>
+      </div>
+    </header>
+
+    <div class="date">24 April 2024</div>
+
+    <main class="container">
+      <h1>Deposit Money</h1>
+      <p class="subtitle">Please enter your details for Deposit</p>
+
+      <div class="form-card">
+        <div class="row">
+          <label>👤 Account Holder Name</label>
+          <input type="text" placeholder="Enter account holder name" />
+        </div>
+
+        <div class="row">
+          <label># Account Number</label>
+          <input type="text" placeholder="Enter your account number" />
+        </div>
+
+        <div class="row">
+          <label>🏦 Bank Name</label>
+          <select>
+            <option>SBI</option>
+            <option>PNB</option>
+            <option>HDFC</option>
+          </select>
+        </div>
+
+        <div class="row">
+          <label>🏛 Branch Name</label>
+          <input type="text" placeholder="Enter branch name" />
+        </div>
+
+        <div class="row ifsc">
+          <label>₹ IFSC Code</label>
+          <div class="ifsc-box">
+            <input type="text" value="SBIN0001234" />
+            <button class="icon-btn">🖨</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <label>💰 Amount</label>
+          <input type="text" placeholder="Enter amount to withdraw" />
+        </div>
+
+        <div class="row">
+          <label>📱 Mobile Number</label>
+          <input type="text" placeholder="Enter mobile number" />
+        </div>
+
+        <div class="form-footer">
+          <button class="back">← Back</button>
+          <button class="print">🖨 Print Form</button>
+        </div>
+      </div>
+
+      <p class="footer-text">Offline • Secure • Print Ready</p>
+    </main>
+  </body>
+</html>

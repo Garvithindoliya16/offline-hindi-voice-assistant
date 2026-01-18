@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Form Assistance System</title>
+    <link rel="stylesheet" href="css/home.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo-section">
+            <div class="logo-circle"></div>
+            <h1>Bank Form Assistance System</h1>
+        </div>
+        <div class="nav-right">
+            <div class="lang-switch">
+                <span class="lang-active">English</span>
+                <span class="lang-inactive">हिंदी ▾</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="date-display">24 April 2024</div>
+        
+        <section class="hero-text">
+            <h2>Bank Form Assistance System</h2>
+            <p>Fill and print bank forms easily</p>
+        </section>
+
+        <div class="card">
+            <p class="instruction">Please select the service you want to use</p>
+            
+            <button class="btn btn-purple" onclick="pywebview.api.withdraw()">
+                <span class="icon">💵</span> Withdraw Money
+            </button>
+            
+            <button class="btn btn-green-teal">
+                <span class="icon">🧾</span> Deposit Money
+            </button>
+            
+            <button class="btn btn-purple">
+                <span class="icon">📝</span> Cheque Fill
+            </button>
+
+            <div class="card-footer">
+                <button class="btn-secondary">‹ Back</button>
+                <button class="btn btn-green-teal">🖨️ Print Form</button>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bottom-info">
+        <span>⚙️ Offline • Secure • Print Ready</span>
+        <button class="btn-help">Help</button>
+    </footer>
+
+</body>
+</html>

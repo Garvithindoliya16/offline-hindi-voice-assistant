@@ -1,0 +1,162 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f0f2f5;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #5c6bc0;
+    color: white;
+    padding: 10px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo-circle {
+    width: 35px;
+    height: 35px;
+    background-color: #fff;
+    border-radius: 50%; /* Placeholder for the SBI-style logo */
+}
+
+.lang-switch {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 5px;
+    border-radius: 20px;
+    font-size: 14px;
+}
+
+.lang-active {
+    background: white;
+    color: #5c6bc0;
+    padding: 3px 12px;
+    border-radius: 15px;
+}
+
+.lang-inactive {
+    padding: 3px 12px;
+}
+
+/* Main Content */
+.container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 40px;
+}
+
+.date-display {
+    align-self: flex-end;
+    margin-right: 10%;
+    color: #666;
+    font-size: 14px;
+}
+
+.hero-text {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.hero-text h2 {
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.hero-text p {
+    color: #777;
+    margin-top: 5px;
+}
+
+/* Service Card */
+.card {
+    background: white;
+    width: 90%;
+    max-width: 550px;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.instruction {
+    text-align: center;
+    color: #666;
+    margin-bottom: 25px;
+}
+
+.btn {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.btn-purple { background-color: #7986cb; }
+.btn-green-teal { background-color: #4db6ac; }
+
+.btn-secondary {
+    padding: 10px 30px;
+    border: 1px solid #ddd;
+    background: white;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #555;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    align-items: center;
+}
+
+.card-footer .btn {
+    width: auto;
+    margin-bottom: 0;
+}
+
+/* Footer Section */
+.bottom-info {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    color: #888;
+    font-size: 14px;
+}
+
+.btn-help {
+    position: absolute;
+    right: 20px;
+    background: #ef5350;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 20px;
+}
