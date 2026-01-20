@@ -12,5 +12,4 @@ def speak(text):
 
     engine.say(text)
     engine.runAndWait()
-    engine.stop()
-    time.sleep(0.3)
+    # time.sleep(0.3)
