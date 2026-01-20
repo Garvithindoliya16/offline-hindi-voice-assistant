@@ -16,12 +16,36 @@ class Engine:
         self.WITHDRAW = "withdraw"
         self.DEPOSIT = "deposit"
 
+        # to maintain the state of the speaker
+        self.speaking = False 
+
+
+    # functino to maintain the state of speaker 
+    # if not maintained it will throw async error of run loop already running
+    # for example 
+    # if speaker is already running from getIntent method and again called from getName
+    # speaker will need to process to text at a single time which will cause the error 
+
+    def speak(self, text):
+        # hold while the speaker is running by the while loop
+        # if any functino sets the `self.speaker = False` the while condition will get broken 
+        # and hold will be cleared and speaker can be used again 
+        while (self.speaking): None 
+        # set the speaker is speaking
+        self.speaking = True 
+
+        speak(text)
+
+        # set the speaker is free again to break the hold for other uses 
+        self.speaking = False 
+
     
     def getIntent(self):
-        while True :
             print("getIntent")
-            time.sleep(0.5)
-            speak("आप क्या करना चाहते हैं")
+
+            self.speak("आप क्या करना चाहते हैं")
+        
+
             print("Listening for intent...")
             text = listen()
             print("User:", text)
@@ -31,21 +55,23 @@ class Engine:
             if self.intent in ["deposit","withdraw","balance","passbook","open_account"]:                
                 
                 if self.intent == "deposit":
-                    speak("आप पैसे जमा करना चाहते हैं")
+                    self.speak("आप पैसे जमा करना चाहते हैं")
                 else:
-                    speak("आप पैसे निकालना चाहते हैं")
+                    self.speak("आप पैसे निकालना चाहते हैं")
 
-                break
+                return True
             else:
                 self.intent = None
-                speak("माफ कीजिये, समझ नहीं आया, कृपया साफ़ बोलिए")
-                continue
+                self.speak("माफ कीजिये, समझ नहीं आया, कृपया साफ़ बोलिए")
+                return False
 
         
     
     def getName(self):
         # while True :
-            speak("कृपया अपना पूरा नाम बताइए")
+            
+            self.speak("कृपया अपना पूरा नाम बताइए")
+            
             print("Listening for name...")
             name = listen()
             print("name: ",name)
@@ -53,12 +79,14 @@ class Engine:
                 self.name = name
                 return True
             else:
-                speak("नाम सही नहीं है, कृपया फिर से बोलिए")
+                self.speak("नाम सही नहीं है, कृपया फिर से बोलिए")
                 return False
         
     def getAccount(self):
-        while True:
-            speak("कृपया खाता नंबर बताइए")
+        
+            
+            self.speak("कृपया खाता नंबर बताइए")
+            
             print("Listening for account...")
             raw = listen()
             account = extract_number(raw)
@@ -67,15 +95,19 @@ class Engine:
                 self.account = account
                 return True
             else:
-                speak("खाता नंबर सही नहीं है, कृपया फिर से बोलिए")
+                self.speak("खाता नंबर सही नहीं है, कृपया फिर से बोलिए")
                 return False
+    
+
         
     def getAmount(self):
-        while True:
-            if self.intent == "deposit":
-                speak("कितनी राशि जमा करनी है")
-            else:
-                speak("कितनी राशि निकालनी है")
+        # while True:
+            if self.intent == self.DEPOSIT: cmd = "कितनी राशि जमा करनी है"
+                
+            elif self.intent == self.WITHDRAW: cmd = "कितनी राशि निकालनी है"
+
+            self.speak(cmd)
+
             print("Listening for amount...")
             raw = listen()
             amount = extract_number(raw)
@@ -84,7 +116,7 @@ class Engine:
                 self.amount = amount
                 return True
             else : 
-                speak("राशि सही नहीं है, कृपया फिर से बोलिए")
+                self.speak("राशि सही नहीं है, कृपया फिर से बोलिए")
                 return False
 
     def print(self):
