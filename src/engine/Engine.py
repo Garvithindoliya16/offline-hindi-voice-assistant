@@ -41,83 +41,81 @@ class Engine:
 
     
     def getIntent(self):
-            print("getIntent")
+        self.name = self.amount = self.account = self.word_amount = None
 
-            self.speak("आप क्या करना चाहते हैं")
-        
+        self.speak("आप क्या करना चाहते हैं")
+    
 
-            print("Listening for intent...")
-            text = listen()
-            print("User:", text)
+        print("Listening for intent...")
+        text = listen()
+        print("User:", text)
 
-            self.intent = predict_intent(text)
-            print(self.intent)
-            if self.intent in ["deposit","withdraw","balance","passbook","open_account"]:                
-                
-                if self.intent == "deposit":
-                    self.speak("आप पैसे जमा करना चाहते हैं")
-                else:
-                    self.speak("आप पैसे निकालना चाहते हैं")
-
-                return True
+        self.intent = predict_intent(text)
+        print(self.intent)
+        if self.intent in ["deposit","withdraw","balance","passbook","open_account"]:                
+            
+            if self.intent == "deposit":
+                self.speak("आप पैसे जमा करना चाहते हैं")
             else:
-                self.intent = None
-                self.speak("माफ कीजिये, समझ नहीं आया, कृपया साफ़ बोलिए")
-                return False
+                self.speak("आप पैसे निकालना चाहते हैं")
+
+            return True
+        else:
+            self.intent = None
+            self.speak("माफ कीजिये, समझ नहीं आया, कृपया साफ़ बोलिए")
+            return False
 
         
     
     def getName(self):
-        # while True :
-            
-            self.speak("कृपया अपना पूरा नाम बताइए")
-            
-            print("Listening for name...")
-            name = listen()
-            print("name: ",name)
-            if len(name) > 2:
-                self.name = name
-                return True
-            else:
-                self.speak("नाम सही नहीं है, कृपया फिर से बोलिए")
-                return False
+        self.speak("कृपया अपना पूरा नाम बताइए")
         
-    def getAccount(self):
+        print("Listening for name...")
+        name = listen()
+        print("name: ",name)
+        if len(name) > 2:
+            self.name = name
+            return True
+        else:
+            self.speak("नाम सही नहीं है, कृपया फिर से बोलिए")
+            return False
         
-            
-            self.speak("कृपया खाता नंबर बताइए")
-            
-            print("Listening for account...")
-            raw = listen()
-            account = extract_number(raw)
-            print("account: ", account)
-            if account.replace(" ", "").isdigit():
-                self.account = account
-                return True
-            else:
-                self.speak("खाता नंबर सही नहीं है, कृपया फिर से बोलिए")
-                return False
+    def getAccount(self):        
+        self.speak("कृपया खाता नंबर बताइए")
+        
+        print("Listening for account...")
+        raw = listen()
+        account = extract_number(raw)
+        print("account: ", account)
+        if account.replace(" ", "").isdigit():
+            self.account = account
+            return True
+        else:
+            self.speak("खाता नंबर सही नहीं है, कृपया फिर से बोलिए")
+            return False
     
 
         
     def getAmount(self):
-        # while True:
-            if self.intent == self.DEPOSIT: cmd = "कितनी राशि जमा करनी है"
-                
-            elif self.intent == self.WITHDRAW: cmd = "कितनी राशि निकालनी है"
+        # handling self.intent from app.py when a button is click for the intent in route_change() function of app
 
-            self.speak(cmd)
+        if self.intent == self.DEPOSIT: cmd = "कितनी राशि जमा करनी है"
+            
+        elif self.intent == self.WITHDRAW: cmd = "कितनी राशि निकालनी है"
 
-            print("Listening for amount...")
-            raw = listen()
-            amount = extract_number(raw)
-            print("amount: ", amount)
-            if amount.replace(" ", "").isdigit():
-                self.amount = amount
-                return True
-            else : 
-                self.speak("राशि सही नहीं है, कृपया फिर से बोलिए")
-                return False
+        self.speak(cmd)
+
+        print("Listening for amount...")
+        raw = listen()
+        amount = extract_number(raw)
+        print("amount: ", amount)
+        if amount.replace(" ", "").isdigit() and int(amount.replace(" ", "").isdigit()) != 0:
+            self.amount = amount
+            self.word_amount = raw
+            return True
+        else : 
+            self.speak("राशि सही नहीं है, कृपया फिर से बोलिए")
+            return False
 
     def print(self):
         print(self.intent)
@@ -125,11 +123,12 @@ class Engine:
         print(self.account)
         print(self.amount)
 
-    
-# engine = Engine()
 
-# engine.getIntent()
-# engine.getName()
-# engine.getAccount()
-# engine.getAmount()
-# engine.print()
+if __name__ == "__main__":    
+    engine = Engine()
+
+    engine.getIntent()
+    engine.getName()
+    engine.getAccount()
+    engine.getAmount()
+    engine.print()

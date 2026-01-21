@@ -10,7 +10,7 @@ try:
 except:
     print("Font file not found. Please provide a valid .ttf file path.")
 
-def generate_filled_cheque( name, amount_num, amount_words, date_val, acc_num, filename="..\\pdfs\\bank_cheque.pdf"):
+def generate_filled_cheque( name, amount_num, amount_words, date_val, acc_num, filename="..\\engine\\pdfs\\bank_cheque.pdf"):
     # Standard dimensions: 8.25" x 3.0"
     width, height = 8.25 * inch, 3.0 * inch
     c = canvas.Canvas(filename, pagesize=(width, height))
@@ -63,7 +63,7 @@ def generate_filled_cheque( name, amount_num, amount_words, date_val, acc_num, f
     c.line(0.4 * inch, height - 2.0 * inch, 6.7 * inch, height - 2.0 * inch)
     c.drawString(6.8 * inch, height - 1.98 * inch, "DOLLARS 🔒")
     
-    c.setFont("Times-Italic", 11)
+    c.setFont("HindiFont", 11)
     c.drawString(0.5 * inch, height - 1.95 * inch, amount_words)
 
     # --- 5. Adjusted Account Number (Shifted Bottom) ---

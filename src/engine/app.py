@@ -95,9 +95,11 @@ class BankAssistantApp:
             self.page.run_task(self.run_voice_intent_input)
             
         elif self.page.route == "/withdraw":
+            self.engine.intent = self.engine.WITHDRAW # set the intent of the intent for button click 
             self.page.views.append(self.transaction_ui("Withdraw"))
             self.form_input_task = self.page.run_task(self.run_voice_sequence_form_input)
         elif self.page.route == "/deposit":
+            self.engine.intent = self.engine.DEPOSIT # set the intent of the intent for button click 
             self.page.views.append(self.transaction_ui("Deposit"))
             self.form_input_task = self.page.run_task(self.run_voice_sequence_form_input)
         
@@ -126,6 +128,7 @@ class BankAssistantApp:
         await self.getAccount()
         await self.getAmount()
         self.genPdf() #create the pdf
+        await self.reset_fields(None)
         await self.page.push_route("/")
 
         
@@ -162,7 +165,7 @@ class BankAssistantApp:
 
     async def getAmount(self):
         while self.page.route != "/":
-            if await asyncio.to_thread(self.engine.getAmount):
+            if await asyncio.to_thread(self.engine.getAmount, ):
                 self.amount_field.value = str(self.engine.amount)
                 self.page.update()
                 break
@@ -170,12 +173,14 @@ class BankAssistantApp:
 
     def genPdf(self):
         generate_filled_cheque(
-            name=self.name_field.value,
-            amount_num=int(str(self.amount_field.value).replace(" ", "")),
-            amount_words=self.amount_field.value,
-            acc_num=str(self.account_field.value),
+            name=self.engine.name,
+            amount_num=int(str(self.engine.amount).replace(" ", "")),
+            amount_words=self.engine.word_amount,
+            acc_num=str(self.engine.account),
             date_val=datetime.now().strftime("%d/%m/%Y")
         )
+
+
     
 
 # --- ENTRY POINT ---
