@@ -1,6 +1,8 @@
 import flet as ft
 import asyncio
 from Engine import Engine
+from PdfGen import generate_filled_cheque
+from datetime import datetime
 
 class BankAssistantApp:
     def __init__(self, page: ft.Page):
@@ -90,7 +92,6 @@ class BankAssistantApp:
         self.page.views.clear()
         if self.page.route == "/":
             self.page.views.append(self.home_view())
-            print("yes")
             self.page.run_task(self.run_voice_intent_input)
             
         elif self.page.route == "/withdraw":
@@ -124,6 +125,10 @@ class BankAssistantApp:
         await self.getName()
         await self.getAccount()
         await self.getAmount()
+        self.genPdf() #create the pdf
+        await self.page.push_route("/")
+
+        
 
     async def getIntent(self):
         intent = ""
@@ -162,6 +167,16 @@ class BankAssistantApp:
                 self.page.update()
                 break
             await asyncio.sleep(0.1)
+
+    def genPdf(self):
+        generate_filled_cheque(
+            name=self.name_field.value,
+            amount_num=int(str(self.amount_field.value).replace(" ", "")),
+            amount_words=self.amount_field.value,
+            acc_num=str(self.account_field.value),
+            date_val=datetime.now().strftime("%d/%m/%Y")
+        )
+    
 
 # --- ENTRY POINT ---
 
