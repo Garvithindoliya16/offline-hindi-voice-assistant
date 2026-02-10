@@ -3,6 +3,7 @@ import asyncio
 from Engine import Engine
 from PdfGen import generate_filled_cheque
 from datetime import datetime
+from Facerecogination.reco import Facerecogination
 
 class BankAssistantApp:
     def __init__(self, page: ft.Page):
@@ -10,6 +11,8 @@ class BankAssistantApp:
         self.page.title = "Bank Form Assistance System"
         self.page.theme_mode = ft.ThemeMode.LIGHT
         self.engine = Engine()
+
+        self.faceRecogination = Facerecogination()
 
         # Define reusable TextFields
         self.name_field = ft.TextField(label="Account Holder Name", width=300)
@@ -22,6 +25,7 @@ class BankAssistantApp:
 
         # Task to destroy when user is not on a FORM INPUT page
         self.form_input_task = None
+        self.page.go( "/")
 
     def home_view(self):
         navbar = ft.Container(
@@ -88,22 +92,38 @@ class BankAssistantApp:
             ]
         )
 
+
     async def route_change(self, e):
         self.page.views.clear()
+
         if self.page.route == "/":
+
+            # Capture and recognize immediately
+            self.faceRecogination.capture()
+            name = self.faceRecogination.faceReco()
+
+            if name:
+                self.engine.name = name
+                self.engine.speak(f"नमस्ते {name} जी, आपका स्वागत है")
+
             self.page.views.append(self.home_view())
             self.page.run_task(self.run_voice_intent_input)
-            
+
         elif self.page.route == "/withdraw":
-            self.engine.intent = self.engine.WITHDRAW # set the intent of the intent for button click 
+            self.engine.intent = self.engine.WITHDRAW
             self.page.views.append(self.transaction_ui("Withdraw"))
             self.form_input_task = self.page.run_task(self.run_voice_sequence_form_input)
+
         elif self.page.route == "/deposit":
-            self.engine.intent = self.engine.DEPOSIT # set the intent of the intent for button click 
+            self.engine.intent = self.engine.DEPOSIT
             self.page.views.append(self.transaction_ui("Deposit"))
             self.form_input_task = self.page.run_task(self.run_voice_sequence_form_input)
-        
-        self.page.update() 
+
+        self.page.update()
+
+
+    def faceReco(self):
+        self.engine.name = self.faceRecogination.faceReco()
 
     async def view_pop(self, e):
         if len(self.page.views) > 1:
@@ -122,14 +142,30 @@ class BankAssistantApp:
     async def run_voice_intent_input(self):
         await self.getIntent()
 
+
     async def run_voice_sequence_form_input(self):
-        """Runs without blocking the UI thread"""
-        await self.getName()
+
+        # If already recognized
+        if self.engine.name:
+            self.engine.speak(f"नमस्ते {self.engine.name} जी")
+
+        else:
+            # New user flow
+            await self.getName()
+
+            # Capture face AFTER getting name
+            self.faceRecogination.capture()
+
+            # Save new user
+            self.faceRecogination.saveUser(self.engine.name)
+
         await self.getAccount()
         await self.getAmount()
-        self.genPdf() #create the pdf
+
+        self.genPdf()
         await self.reset_fields(None)
         await self.page.push_route("/")
+
 
         
 
@@ -146,14 +182,19 @@ class BankAssistantApp:
         elif (intent == self.engine.DEPOSIT): await self.page.push_route("/deposit")
         
 
+
+
     async def getName(self):
+
         while self.page.route != "/":
-            # to_thread prevents the Vosk model from freezing the GUI
             if await asyncio.to_thread(self.engine.getName):
+
                 self.name_field.value = self.engine.name
                 self.page.update()
                 break
+
             await asyncio.sleep(0.1)
+
 
     async def getAccount(self):
         while self.page.route != "/":
@@ -191,3 +232,49 @@ async def main(page: ft.Page):
 
 if __name__ == "__main__":
     ft.run(main)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

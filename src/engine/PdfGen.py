@@ -6,7 +6,8 @@ from reportlab.pdfbase.ttfonts import TTFont
 
 
 try:
-    pdfmetrics.registerFont(TTFont('HindiFont', '..\\fonts\\Poppins-Regular.ttf'))
+    pdfmetrics.registerFont(TTFont('HindiFont', '..\\fonts\\Poppins-Regular.ttf')),
+    pdfmetrics.registerFont(TTFont('DejaVuSans', '../fonts/DejaVuSans.ttf'))
 except:
     print("Font file not found. Please provide a valid .ttf file path.")
 
@@ -21,7 +22,7 @@ def generate_filled_cheque( name, amount_num, amount_words, date_val, acc_num, f
 
     # --- 2. Bank Header ---
     c.setFillColor(colors.darkslategray)
-    c.setFont("Helvetica-Bold", 14)
+    c.setFont("DejaVuSans", 14)
     c.drawString(0.4 * inch, height - 0.6 * inch, "🏛 BANK NAME")
     
     c.setFont("Helvetica", 8)
@@ -48,8 +49,8 @@ def generate_filled_cheque( name, amount_num, amount_words, date_val, acc_num, f
     c.drawString(1.5 * inch, height - 1.28 * inch, name)
 
     # Dollar Box & Numeric Amount
-    c.setFont("Helvetica", 16)
-    c.drawString(6.0 * inch, height - 1.3 * inch, "$")
+    c.setFont("HindiFont", 16)
+    c.drawString(6.0 * inch, height - 1.3 * inch, "₹")
     c.rect(6.2 * inch, height - 1.45 * inch, 1.6 * inch, 0.35 * inch)
     c.setFont("Helvetica-Bold", 12)
     c.drawString(6.3 * inch, height - 1.35 * inch, f"{amount_num:,.2f}")
@@ -61,7 +62,7 @@ def generate_filled_cheque( name, amount_num, amount_words, date_val, acc_num, f
 
     # Amount in Words Line
     c.line(0.4 * inch, height - 2.0 * inch, 6.7 * inch, height - 2.0 * inch)
-    c.drawString(6.8 * inch, height - 1.98 * inch, "DOLLARS 🔒")
+    c.drawString(6.8 * inch, height - 1.98 * inch, "RUPEES")
     
     c.setFont("HindiFont", 11)
     c.drawString(0.5 * inch, height - 1.95 * inch, amount_words)

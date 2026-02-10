@@ -2,8 +2,9 @@ from speaker import speak
 from stt import listen
 from intent import predict_intent
 from number_parser import extract_number
-
-import time
+from name_parser import extract_name
+from predict import normalize
+import asyncio
 
 class Engine:
     def __init__(self):
@@ -33,21 +34,29 @@ class Engine:
         while (self.speaking): None 
         # set the speaker is speaking
         self.speaking = True 
-
+        print(text)
         speak(text)
 
         # set the speaker is free again to break the hold for other uses 
         self.speaking = False 
+
 
     
     def getIntent(self):
         self.name = self.amount = self.account = self.word_amount = None
 
         self.speak("आप क्या करना चाहते हैं")
-    
+        
 
-        print("Listening for intent...")
         text = listen()
+        
+       
+        # async def main():
+        #     _, text = await asyncio.gather(self.speak("आप क्या करना चाहते हैं"), listen())
+        #     return text
+
+        # text = asyncio.run(main())
+
         print("User:", text)
 
         self.intent = predict_intent(text)
@@ -71,7 +80,14 @@ class Engine:
         self.speak("कृपया अपना पूरा नाम बताइए")
         
         print("Listening for name...")
-        name = listen()
+        name = extract_name(listen())
+
+        # async def main():
+        #     _, text = await asyncio.gather(self.speak("कृपया अपना पूरा नाम बताइए"), listen())
+        #     return text
+
+        # name = extract_name(asyncio.run(main()))
+
         print("name: ",name)
         if len(name) > 2:
             self.name = name
@@ -84,7 +100,16 @@ class Engine:
         self.speak("कृपया खाता नंबर बताइए")
         
         print("Listening for account...")
-        raw = listen()
+        raw = normalize(listen())
+        print("raw: ",raw)
+
+        # async def main():
+        #     _, text = await asyncio.gather(self.speak("कृपया खाता नंबर बताइए"), listen())
+        #     return text
+
+        # raw = asyncio.run(main())
+
+        
         account = extract_number(raw)
         print("account: ", account)
         if account.replace(" ", "").isdigit():
@@ -106,7 +131,16 @@ class Engine:
         self.speak(cmd)
 
         print("Listening for amount...")
-        raw = listen()
+        raw = normalize(listen())
+
+        print("raw: ",raw)
+        # async def main():
+        #     _, text = await asyncio.gather(self.speak(cmd), listen())
+        #     return text
+
+        # raw = asyncio.run(main())
+        
+
         amount = extract_number(raw)
         print("amount: ", amount)
         if amount.replace(" ", "").isdigit() and int(amount.replace(" ", "").isdigit()) != 0:
@@ -132,3 +166,5 @@ if __name__ == "__main__":
     engine.getAccount()
     engine.getAmount()
     engine.print()
+
+

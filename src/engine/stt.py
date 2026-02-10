@@ -1,12 +1,12 @@
 import pyaudio, json, time
 from vosk import Model, KaldiRecognizer
-from intent import predict_intent
+import time
 # model = Model("models/vosk-hi")
-model = Model("models/vosk-model-small-hi-0.22")
+model = Model("models/vosk-model-hi-0.22")
+rec = KaldiRecognizer(model,16000)
 
 def listen():
-    time.sleep(0.3)
-    rec = KaldiRecognizer(model,16000)
+    # print("Listening....")
     mic = pyaudio.PyAudio()
     stream = mic.open(rate=16000,channels=1,format=pyaudio.paInt16,input=True,frames_per_buffer=8192)
     stream.start_stream()
@@ -19,3 +19,6 @@ def listen():
             stream.close()
             mic.terminate()
             return text
+
+
+

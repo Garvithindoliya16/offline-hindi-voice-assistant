@@ -42,6 +42,7 @@ while True:
     speak("कृपया खाता नंबर बताइए")
     print("Listening for intent...")
     raw = listen()
+    print("raw: ",raw)
     account = extract_number(raw)
     print("account: ", account)
     if account.replace(" ", "").isdigit():
