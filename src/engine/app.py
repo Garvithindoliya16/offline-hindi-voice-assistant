@@ -12,10 +12,11 @@ class BankAssistantApp:
         self.page.theme_mode = ft.ThemeMode.LIGHT
         self.engine = Engine()
 
-        self.faceRecogination = Facerecogination()
+        # self.faceRecogination = Facerecogination()
 
         # Define reusable TextFields
-        self.name_field = ft.TextField(label="Account Holder Name", width=300)
+        self.name_field = ft.TextField(label="Account Holder Name", width=300,
+                                       text_style=ft.TextStyle(font_family=20))
         self.account_field = ft.TextField(label="Account Number", width=300)
         self.amount_field = ft.TextField(label="Amount", width=300)
 
@@ -99,12 +100,12 @@ class BankAssistantApp:
         if self.page.route == "/":
 
             # Capture and recognize immediately
-            self.faceRecogination.capture()
-            name = self.faceRecogination.faceReco()
+            # self.faceRecogination.capture()
+            # name = self.faceRecogination.faceReco()
 
-            if name:
-                self.engine.name = name
-                self.engine.speak(f"नमस्ते {name} जी, आपका स्वागत है")
+            # if name:
+            #     self.engine.name = name
+            #     self.engine.speak(f"नमस्ते {name} जी, आपका स्वागत है")
 
             self.page.views.append(self.home_view())
             self.page.run_task(self.run_voice_intent_input)
@@ -122,8 +123,8 @@ class BankAssistantApp:
         self.page.update()
 
 
-    def faceReco(self):
-        self.engine.name = self.faceRecogination.faceReco()
+    # def faceReco(self):
+    #     self.engine.name = self.faceRecogination.faceReco()
 
     async def view_pop(self, e):
         if len(self.page.views) > 1:
@@ -154,10 +155,10 @@ class BankAssistantApp:
             await self.getName()
 
             # Capture face AFTER getting name
-            self.faceRecogination.capture()
+            # self.faceRecogination.capture()
 
             # Save new user
-            self.faceRecogination.saveUser(self.engine.name)
+            # self.faceRecogination.saveUser(self.engine.name)
 
         await self.getAccount()
         await self.getAmount()
@@ -190,6 +191,7 @@ class BankAssistantApp:
             if await asyncio.to_thread(self.engine.getName):
 
                 self.name_field.value = self.engine.name
+
                 self.page.update()
                 break
 
