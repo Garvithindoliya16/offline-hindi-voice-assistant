@@ -5,13 +5,13 @@ def speak(text):
     engine.setProperty('rate',150)
 
     voices = engine.getProperty('voices')
-    print(voices)
+    # print(voices)
     # for v in voices:
     #     if "hindi" in v.name.lower() or "hi-in" in v.id.lower():
     #         engine.setProperty('voice', v.id)
     #         print(v.id)
     #         break
-    engine.setProperty("voice", "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\MSTTS_V110_hiIN_HemantM")
+    engine.setProperty("voice", "HKEY_LOCAL_MACHINE/SOFTWARE/Microsoft/Speech/Voices/Tokens/MSTTS_V110_hiIN_HemantM")
 
     engine.say(text)
     engine.runAndWait()
@@ -20,4 +20,5 @@ def speak(text):
 if __name__ == "__main__":
     speak("आप क्या करना चाहते हैं")
 
-# HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\MSTTS_V110_hiIN_HemantM
+
+# HKEY_LOCAL_MACHINE/SOFTWARE/Microsoft/Speech/Voices/Tokens/MSTTS_V110_hiIN_HemantM

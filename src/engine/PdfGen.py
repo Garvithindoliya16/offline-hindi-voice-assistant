@@ -6,12 +6,12 @@ from reportlab.pdfbase.ttfonts import TTFont
 
 
 try:
-    pdfmetrics.registerFont(TTFont('HindiFont', '..\\fonts\\Poppins-Regular.ttf')),
+    pdfmetrics.registerFont(TTFont('HindiFont', '../fonts/Poppins-Regular.ttf')),
     pdfmetrics.registerFont(TTFont('DejaVuSans', '../fonts/DejaVuSans.ttf'))
 except:
     print("Font file not found. Please provide a valid .ttf file path.")
 
-def generate_filled_cheque( name, amount_num, amount_words, date_val, acc_num, filename="..\\engine\\pdfs\\bank_cheque.pdf"):
+def generate_filled_cheque( name, amount_num, amount_words, date_val, acc_num, filename="../engine/pdfs/bank_cheque.pdf"):
     # Standard dimensions: 8.25" x 3.0"
     width, height = 8.25 * inch, 3.0 * inch
     c = canvas.Canvas(filename, pagesize=(width, height))
@@ -90,7 +90,7 @@ def generate_filled_cheque( name, amount_num, amount_words, date_val, acc_num, f
 
 if __name__ == "__main__":
     generate_filled_cheque(
-        filename=".\\pdfs\\bank_cheque.pdf",
+        filename="./pdfs/bank_cheque.pdf",
         name="Nikhil Bardeja",
         amount_num=100.00,
         amount_words="One Hundred Dollars Only",
